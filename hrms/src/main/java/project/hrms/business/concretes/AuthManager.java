@@ -98,6 +98,7 @@ public class AuthManager implements AuthService {
 	
 	private boolean checkIfEqualPasswordAndConfirmPassword(String password, String confirmPassword) {
 
+		
 		if (!password.equals(confirmPassword)) {
 			return false;
 		}
