@@ -1,5 +1,7 @@
 package project.hrms.entities.concretes;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,11 +9,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="job_titles")
+@EqualsAndHashCode 
 public class JobTitle {
 	
 	@Id
@@ -22,13 +30,16 @@ public class JobTitle {
 	@Column(name="title_name")
 	private String titleName;
 	
-	public JobTitle (){}
+	@Column(name="description")
+	private String description;
 	
-	public JobTitle(int id, String titleName) {
-		super();
-		this.id = id;
-		this.titleName = titleName;
-	}
-
+	@Column(name="created_date",columnDefinition = "Date default CURRENT_DATE")
+	private LocalDate createdDate=LocalDate.now();
+	
+	@Column(name="is_active",columnDefinition = "boolean default true")
+	private Boolean isActive =true;
+	
+	@Column(name="is_deleted",columnDefinition = "boolean default false")
+	private Boolean isDeleted=false;
 	
 }
