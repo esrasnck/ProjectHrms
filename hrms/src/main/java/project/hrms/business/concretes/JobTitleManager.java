@@ -12,6 +12,7 @@ import project.hrms.core.utilities.results.Result;
 import project.hrms.core.utilities.results.SuccessDataResult;
 import project.hrms.core.utilities.results.SuccessResult;
 import project.hrms.dataAccess.abstracts.JobTitleDao;
+import project.hrms.entities.concretes.City;
 import project.hrms.entities.concretes.JobTitle;
 
 
@@ -54,6 +55,15 @@ public class JobTitleManager implements JobTitleService {
 		return true;
 		
 	}
+
+
+	@Override
+	public DataResult<JobTitle> getJobTitleById(int jobTitleId) {
+	
+		
+		return new SuccessDataResult<JobTitle>(this.jobtitleDao.getOne(jobTitleId));
+	}
+
 
 	
 }

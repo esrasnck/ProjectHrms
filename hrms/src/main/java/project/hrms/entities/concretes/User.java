@@ -22,12 +22,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name="users")
-@Inheritance(strategy=InheritanceType.JOINED)  // miras verdiği sınıfa ozelliklerini aktarır?
+@Inheritance(strategy=InheritanceType.JOINED) 
 
 public class User {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY) //bunu vermeyince, hep api hem de pg adminden değişiklik yapmamıza izin veriyor. bunu koymadığımıza id'ler çakışıyor. ya veritabanı üzerinden ya da api üzerinden ekleme yapabiliyoruz.
+	@GeneratedValue(strategy= GenerationType.IDENTITY) 
 	@Column(name="id")
 	private int id;
 
@@ -37,8 +37,7 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
-	
-	@Column(name="is_active",columnDefinition = "boolean default true") // default'u true der
+	@Column(name="is_active",columnDefinition = "boolean default true") 
 	private Boolean isActive=true;
 	
 	@Column(name="created_date",columnDefinition = "Date defult CURRENT_DATE")
