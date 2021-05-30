@@ -1,5 +1,6 @@
 package project.hrms.business.concretes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,6 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	
 	@Override
 	public DataResult<List<JobAdvertisementDto>> getByIsActive() {
-	
 		return new SuccessDataResult<List<JobAdvertisementDto>>(this.dtoGenerator(this.jobAdvertisementDao.getByIsActive()),"All active advertisement listed !");
 		
 	}
@@ -80,8 +80,13 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	
 	
 	private List<JobAdvertisementDto> dtoGenerator(List<JobAdvertisement> advertisement){
-		
-		return advertisement.stream().map(adv-> modelMapper.map(adv,JobAdvertisementDto.class)).collect(Collectors.toList());
+		List<JobAdvertisementDto> jobAdvertisementDtos= new ArrayList<JobAdvertisementDto>(); 
+		advertisement.forEach(item -> {
+			JobAdvertisementDto dto=modelMapper.map(item, JobAdvertisementDto.class);
+			dto.setCompanyName(item.getEmployer().getCompanyName());
+			jobAdvertisementDtos.add(dto);
+		});
+		return jobAdvertisementDtos;
 	
 	}
 

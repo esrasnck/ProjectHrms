@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobAdvertisementDto {
-	
-    
+
 	private String titleName;
+	
+	private String companyName;
 	
 	private int openPositionCount; 
 	
@@ -21,6 +22,5 @@ public class JobAdvertisementDto {
 	
 	private LocalDate appealDeadline;
 	
-    private EmployerDto employer;
 
 }
