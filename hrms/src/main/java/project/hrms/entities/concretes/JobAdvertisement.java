@@ -51,7 +51,7 @@ public class JobAdvertisement {
 	@Column(name="appeal_deadline")
 	private LocalDate appealDeadline;
 	
-	@Column(name="created_date",columnDefinition = "Date default CURRENT_DATE")
+	@Column(name="created_date")
 	@JsonIgnore
 	private LocalDate createdDate=LocalDate.now();
 	

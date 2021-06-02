@@ -79,16 +79,6 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	}
 	
 	
-	private List<JobAdvertisementDto> dtoGenerator(List<JobAdvertisement> advertisement){
-		List<JobAdvertisementDto> jobAdvertisementDtos= new ArrayList<JobAdvertisementDto>(); 
-		advertisement.forEach(item -> {
-			JobAdvertisementDto dto=modelMapper.map(item, JobAdvertisementDto.class);
-			dto.setCompanyName(item.getEmployer().getCompanyName());
-			jobAdvertisementDtos.add(dto);
-		});
-		return jobAdvertisementDtos;
-	
-	}
 
 	
 
@@ -108,6 +98,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	}
 	
 	
+	
 	private boolean IsJobAdvertisementExists(JobAdvertisement jobAdvertisement) {
 		
 		if(jobAdvertisement == null) {
@@ -115,5 +106,17 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		}
 		return true;
 	}
+	
+	private List<JobAdvertisementDto> dtoGenerator(List<JobAdvertisement> advertisement){
+		List<JobAdvertisementDto> jobAdvertisementDtos= new ArrayList<JobAdvertisementDto>(); 
+		advertisement.forEach(item -> {
+			JobAdvertisementDto dto=modelMapper.map(item, JobAdvertisementDto.class);
+			dto.setCompanyName(item.getEmployer().getCompanyName());
+			jobAdvertisementDtos.add(dto);
+		});
+		return jobAdvertisementDtos;
+	
+	}
+
 	
 }

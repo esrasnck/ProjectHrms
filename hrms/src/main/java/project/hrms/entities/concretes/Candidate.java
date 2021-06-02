@@ -1,9 +1,11 @@
 package project.hrms.entities.concretes;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -36,5 +38,40 @@ public class Candidate extends User {
 	@Column(name="is_verified_by_email")
 	private Boolean isEmailVerified;
 	
-   
+	@Column(name="picture_url")
+	private String pictureUrl;
+//	
+//	@Column(name ="github_address")
+//	private String githubAddress;
+//	
+//	@Column(name="linkedin_address")
+//	private String linkedinAddress;
+	
+	
+	@Column(name="created_date")
+	private LocalDate createdDate=LocalDate.now();
+	
+	@Column(name="is_deleted",columnDefinition = "boolean default false")
+	private Boolean isDeleted=false;
+	
+	
+   // relational Properties
+	
+	@OneToMany(mappedBy ="candidate")
+	private List<CoverLetter> coverLetters;
+	
+	@OneToMany(mappedBy="candidate")
+	private List<JobExperience> jobExperiences;
+	
+	@OneToMany(mappedBy="candidate")
+	private List<Language> languages;
+	
+	@OneToMany(mappedBy="candidate")
+	private List<Link> links;
+	
+	@OneToMany(mappedBy="candidate")
+	private List<School> schools;
+	
+	@OneToMany(mappedBy="candidate")
+	private List<Skill> skills;
 }

@@ -31,7 +31,7 @@ public class VerificationCode {
 	@Column(name="verification_code")
 	private String verificationCode;  // TODO emailVerificationCode diye değiştir.
 	
-	@Column(name="created_date",columnDefinition = "Date defult CURRENT_DATE")
+	@Column(name="created_date")
 	private LocalDate createdDate=LocalDate.now();
 	
 	@Column(name="expired_date")  // ?

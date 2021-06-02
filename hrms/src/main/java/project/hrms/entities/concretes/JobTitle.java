@@ -41,7 +41,7 @@ public class JobTitle {
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="created_date",columnDefinition = "Date default CURRENT_DATE")
+	@Column(name="created_date")
 	private LocalDate createdDate=LocalDate.now();
 	
 	@Column(name="is_active",columnDefinition = "boolean default true")
