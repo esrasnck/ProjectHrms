@@ -16,6 +16,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -49,9 +51,11 @@ public class User {
 	private Boolean isActive=true;
 	
 	@Column(name="created_date")
+	@JsonIgnore
 	private LocalDate createdDate=LocalDate.now();
 	
 	@Column(name="is_deleted",columnDefinition = "boolean default false")
+	@JsonIgnore
 	private Boolean isDeleted= false;
 	
 }

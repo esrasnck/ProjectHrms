@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="cover_letters")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","candidate"})
 public class CoverLetter {
 
 	@Id
@@ -35,9 +39,11 @@ public class CoverLetter {
 	private Boolean isActive =true;
 	
 	@Column(name="created_date")
+	@JsonIgnore
 	private LocalDate createdDate=LocalDate.now();
 	
 	@Column(name="is_deleted",columnDefinition = "boolean default false")
+	@JsonIgnore
 	private Boolean isDeleted=false;
 	
 	

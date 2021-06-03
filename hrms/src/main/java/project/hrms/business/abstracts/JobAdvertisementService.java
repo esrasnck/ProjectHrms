@@ -10,11 +10,11 @@ public interface JobAdvertisementService {
 
 	Result add(JobAdvertisement jobAdvertisement);
 	
-	DataResult<List<JobAdvertisementDto>> getByIsActive();
-	
-	DataResult<List<JobAdvertisementDto>> getAllSortedByReleaseDate();
+	DataResult<List<JobAdvertisement>> getByIsActive();
 
-	DataResult<List<JobAdvertisementDto>> getAllByEmployerId(int employerId);
+	DataResult<List<JobAdvertisement>> getAllSortedByReleaseDate();
+
+	DataResult<List<JobAdvertisement>> getAllByEmployerId(int employerId);
 
 	Result update(JobAdvertisement jobAdvertisement);
 	

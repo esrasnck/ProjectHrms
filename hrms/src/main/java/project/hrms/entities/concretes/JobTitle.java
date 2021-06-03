@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.engine.profile.Fetch;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -42,12 +43,14 @@ public class JobTitle {
 	private String description;
 	
 	@Column(name="created_date")
+	@JsonIgnore
 	private LocalDate createdDate=LocalDate.now();
 	
 	@Column(name="is_active",columnDefinition = "boolean default true")
 	private Boolean isActive =true;
 	
 	@Column(name="is_deleted",columnDefinition = "boolean default false")
+	@JsonIgnore
 	private Boolean isDeleted=false;
 	
 	// relational propeties

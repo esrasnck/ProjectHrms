@@ -1,10 +1,11 @@
-package project.hrms.business.abstracts;
+package project.hrms.business.concretes;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import project.hrms.business.abstracts.JobExperienceService;
 import project.hrms.core.utilities.results.DataResult;
 import project.hrms.core.utilities.results.Result;
 import project.hrms.core.utilities.results.SuccessDataResult;

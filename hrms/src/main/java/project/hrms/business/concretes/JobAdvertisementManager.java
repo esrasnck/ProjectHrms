@@ -46,26 +46,26 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	// teşekkürler yakup :)
 	
 	@Override
-	public DataResult<List<JobAdvertisementDto>> getByIsActive() {
-		return new SuccessDataResult<List<JobAdvertisementDto>>(this.dtoGenerator(this.jobAdvertisementDao.getByIsActive()),"All active advertisement listed !");
+	public DataResult<List<JobAdvertisement>> getByIsActive() {
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByIsActive(),"All active advertisement listed !");
 		
 	}
 
 	
 	@Override
-	public DataResult<List<JobAdvertisementDto>> getAllSortedByReleaseDate() {
+	public DataResult<List<JobAdvertisement>> getAllSortedByReleaseDate() {
 	
 		Sort sort = Sort.by(Sort.Direction.DESC,"appealDeadline");
 				
-		return new SuccessDataResult<List<JobAdvertisementDto>>(this.dtoGenerator(this.jobAdvertisementDao.findAll(sort)));
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAll(sort));
 		
 	}
 	
 
 	@Override
-	public DataResult<List<JobAdvertisementDto>> getAllByEmployerId(int employerId) {
-		
-		return new SuccessDataResult<List<JobAdvertisementDto>>(this.dtoGenerator(this.jobAdvertisementDao.getByEmployer_IdAndIsOpenedTrue(employerId)));
+	public DataResult<List<JobAdvertisement>>getAllByEmployerId(int employerId) {
+		 
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByEmployer_IdAndIsOpenedTrue(employerId));
 	}
 	
 	
@@ -107,6 +107,8 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		return true;
 	}
 	
+	
+	// mapping system is disabled.
 	private List<JobAdvertisementDto> dtoGenerator(List<JobAdvertisement> advertisement){
 		List<JobAdvertisementDto> jobAdvertisementDtos= new ArrayList<JobAdvertisementDto>(); 
 		advertisement.forEach(item -> {

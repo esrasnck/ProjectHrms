@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,6 +43,7 @@ public class VerificationCode {
 	private Boolean isActivate;
 	
 	@Column(name="is_deleted",columnDefinition = "boolean default false")
+	@JsonIgnore
 	private Boolean isDeleted=false;
 	
 	@Column(name="confirmed_date")  //  ?
