@@ -10,5 +10,7 @@ public interface JobExperienceService {
 
 	Result add(JobExperience jobExperinence);
 	
-	DataResult<List<JobExperience>> findAllByCandidateIdOrderByResignationTimeDesc(int candidateId);
+	DataResult<List<JobExperience>> getAllByCandidateIdOrderByResignationTimeDesc(int candidateId);
+	
+	DataResult<List<JobExperience>> getAllByCandidateId(int candidateId);
 }

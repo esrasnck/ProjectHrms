@@ -30,6 +30,7 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "id")
 	private int id;
+
 	
 	@Column(name = "url")
 	private String url;	
@@ -50,6 +51,6 @@ public class Image {
 	
 	// relational properties
 	
-	 @OneToOne(optional=false,fetch=FetchType.LAZY)
+	 @OneToOne(optional=false,fetch=FetchType.LAZY)  // şuna ihtiyac yok sanki.. Cerenimoya sor
 	 private Candidate candidate;
 }

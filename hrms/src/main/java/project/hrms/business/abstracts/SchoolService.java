@@ -9,5 +9,7 @@ public interface SchoolService {
 
 	Result add(School school);
 	
-	DataResult<List<School>> findAllByCandidateIdOrderByGraduationYear(int candidateId);
+	DataResult<List<School>> getAllByCandidateIdOrderByGraduationYear(int candidateId);
+
+	DataResult<List<School>> getAllByCandidateId(int candidateId);
 }

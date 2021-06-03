@@ -12,4 +12,6 @@ public interface CandidateDao extends JpaRepository<Candidate,Integer> {
 	
 	//Optional<> Araştır
 	Candidate findByEmail(String email);
+	
+	Candidate findById(int id);
 }

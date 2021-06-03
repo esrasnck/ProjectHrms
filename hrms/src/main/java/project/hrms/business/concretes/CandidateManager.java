@@ -7,6 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.hrms.business.abstracts.CandidateService;
+import project.hrms.business.abstracts.CoverLetterService;
+import project.hrms.business.abstracts.ImageService;
+import project.hrms.business.abstracts.JobExperienceService;
+import project.hrms.business.abstracts.LanguageService;
+import project.hrms.business.abstracts.LinkService;
+import project.hrms.business.abstracts.SchoolService;
+import project.hrms.business.abstracts.SkillService;
 import project.hrms.core.utilities.adapters.mernis.UserCheckService;
 import project.hrms.core.utilities.results.DataResult;
 import project.hrms.core.utilities.results.ErrorResult;
@@ -15,6 +22,7 @@ import project.hrms.core.utilities.results.SuccessDataResult;
 import project.hrms.core.utilities.results.SuccessResult;
 import project.hrms.dataAccess.abstracts.CandidateDao;
 import project.hrms.entities.concretes.Candidate;
+import project.hrms.entities.dtos.CandidateCvDto;
 
 @Service("CandidateManager")
 
@@ -23,16 +31,36 @@ public class CandidateManager implements CandidateService {
 	
 	private CandidateDao candidateDao;
 	private UserCheckService userCheckService;
+	private JobExperienceService jobExperienceService;
+	private ImageService imageService;
+	private LanguageService languageService;
+	private LinkService linkService;
+	private SkillService skillService;
+	private SchoolService schoolService;
+	private CoverLetterService coverLetterService;
+	
+	
+	
 	
 	
 	@Autowired
-	public CandidateManager(CandidateDao candidateDao,UserCheckService userCheckService) {
-	
+	public CandidateManager(CandidateDao candidateDao, UserCheckService userCheckService,
+			JobExperienceService jobExperienceService, ImageService imageService, LanguageService languageService,
+			LinkService linkService, SkillService skillService, SchoolService schoolService,CoverLetterService coverLetterService) {
 		super();
-		this.candidateDao=candidateDao;
+		this.candidateDao = candidateDao;
 		this.userCheckService = userCheckService;
-		
+		this.jobExperienceService = jobExperienceService;
+		this.imageService = imageService;
+		this.languageService = languageService;
+		this.linkService = linkService;
+		this.skillService = skillService;
+		this.schoolService = schoolService;
+		this.coverLetterService = coverLetterService;
 	}
+
+	
+
 
 	@Override
 	public DataResult<Candidate> getByNationalId(String nationalId) {
@@ -76,6 +104,27 @@ public class CandidateManager implements CandidateService {
 		return new SuccessResult("Candidate added !");
 	}
 	
+	@Override
+	public DataResult<CandidateCvDto>getDtoById(int candidateId) {
+		
+		CandidateCvDto cvDto = new CandidateCvDto(); // hic icime sinmiyon ama :(
+		
+		cvDto.jobExperiences =this.jobExperienceService.getAllByCandidateId(candidateId).getData();
+		cvDto.schools = this.schoolService.getAllByCandidateId(candidateId).getData();
+		cvDto.languages =this.languageService.getAllByCandidateId(candidateId).getData();
+		cvDto.links =this.linkService.getAllByCandidateId(candidateId).getData();
+		cvDto.skills =this.skillService.getAllByCandidateId(candidateId).getData();
+		cvDto.image =this.imageService.getByCandidateId(candidateId).getData();
+		cvDto.coverLetters = this.coverLetterService.getAllByCandidateId(candidateId).getData();
+		return new SuccessDataResult<CandidateCvDto>(cvDto);
+	}
+
+	@Override
+	public DataResult<Candidate> getById(int candidateId) {
+		
+		return new SuccessDataResult<Candidate>(this.candidateDao.findById(candidateId));
+		
+	}
 	
 	// business rules
 	private boolean checkIfEmailExists(String email) {
@@ -113,4 +162,7 @@ public class CandidateManager implements CandidateService {
 		}
 		return true;
 	}
+
+
+
 }

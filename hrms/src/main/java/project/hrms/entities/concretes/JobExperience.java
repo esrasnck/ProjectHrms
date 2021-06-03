@@ -43,7 +43,7 @@ public class JobExperience {
 	@Column(name="start_year")
 	private LocalDate startYear;
 	
-	@Column(name="resignation_time")
+	@Column(name="resignation_time",nullable = true)
 	private LocalDate resignationTime;
 	
 	@Column(name="created_date")

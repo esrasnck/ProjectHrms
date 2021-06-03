@@ -47,7 +47,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	
 	@Override
 	public DataResult<List<JobAdvertisement>> getByIsActive() {
-		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByIsActive(),"All active advertisement listed !");
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findByIsActive(),"All active advertisement listed !");
 		
 	}
 
@@ -65,7 +65,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	@Override
 	public DataResult<List<JobAdvertisement>>getAllByEmployerId(int employerId) {
 		 
-		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByEmployer_IdAndIsOpenedTrue(employerId));
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findByEmployer_IdAndIsOpenedTrue(employerId));
 	}
 	
 	
@@ -85,7 +85,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	@Override
 	public Result toggleActive(int jobId) {
 		
-		JobAdvertisement jobAdvertisement = this.jobAdvertisementDao.getById(jobId);
+		JobAdvertisement jobAdvertisement = this.jobAdvertisementDao.findById(jobId);
 		if(!IsJobAdvertisementExists(jobAdvertisement)) {
 			
 			return new ErrorResult("Job Advertisement doesn't exists");

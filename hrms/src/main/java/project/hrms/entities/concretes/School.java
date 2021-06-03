@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,8 +43,8 @@ public class School {
 	@Column(name="start_year")
 	private LocalDate startYear;
 	
-	@Column(name="graduation_year")
-	private LocalDate graduationYear; // TODO nullable must yaz
+	@Column(name="graduation_year", nullable = true)
+	private LocalDate graduationYear;
 	
 	
 	@Column(name="created_date")

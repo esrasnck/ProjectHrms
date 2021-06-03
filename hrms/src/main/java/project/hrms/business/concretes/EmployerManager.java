@@ -13,7 +13,7 @@ import project.hrms.core.utilities.results.Result;
 import project.hrms.core.utilities.results.SuccessDataResult;
 import project.hrms.core.utilities.results.SuccessResult;
 import project.hrms.dataAccess.abstracts.EmployerDao;
-import project.hrms.entities.concretes.Candidate;
+
 import project.hrms.entities.concretes.Employer;
 
 @Service("EmployerManager")

@@ -9,4 +9,6 @@ import project.hrms.entities.concretes.JobExperience;
 public interface JobExperienceDao extends JpaRepository<JobExperience, Integer> {
 
 	List<JobExperience> findAllByCandidate_IdOrderByResignationTimeDesc(int candidateId);
+	
+	List<JobExperience> findAllByCandidate_Id(int candidateId);
 } 
