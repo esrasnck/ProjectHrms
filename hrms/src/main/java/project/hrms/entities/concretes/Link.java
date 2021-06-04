@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name="links")
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","candidate"})
+
 public class Link {
 
 	@Id
@@ -47,7 +47,7 @@ public class Link {
 	
 	
 	// relational properties
-	
+
 	@ManyToOne()
 	@JoinColumn(name="candidate_id")
 	private Candidate candidate;

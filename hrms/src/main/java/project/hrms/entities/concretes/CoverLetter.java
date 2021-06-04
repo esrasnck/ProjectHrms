@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="cover_letters")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","candidate"})
+
 public class CoverLetter {
 
 	@Id
@@ -35,6 +35,7 @@ public class CoverLetter {
 	@Column(name="cover_letter")
 	private String coverLetter;
 	
+	@JsonIgnore
 	@Column(name="is_active",columnDefinition = "boolean default true")
 	private Boolean isActive =true;
 	
@@ -48,7 +49,7 @@ public class CoverLetter {
 	
 	
 	// relational Properties
-	
+
 	@ManyToOne()
 	@JoinColumn(name="candidate_id")
 	private Candidate candidate;

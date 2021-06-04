@@ -3,6 +3,7 @@ package project.hrms.core.utilities.imageupload;
 import java.io.IOException;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
@@ -11,6 +12,7 @@ import com.cloudinary.utils.ObjectUtils;
 import project.hrms.core.utilities.results.DataResult;
 import project.hrms.core.utilities.results.ErrorDataResult;
 
+@Service
 public class ImageUploaderManager implements ImageUploaderService{
  
 	

@@ -45,17 +45,18 @@ public class User {
 	@Column(name="password")
 	@NotBlank
 	@NotNull
+	@JsonIgnore
 	private String password;
 	
 	@Column(name="is_active",columnDefinition = "boolean default true") 
 	private Boolean isActive=true;
 	
-	@Column(name="created_date")
 	@JsonIgnore
+	@Column(name="created_date")
 	private LocalDate createdDate=LocalDate.now();
 	
-	@Column(name="is_deleted",columnDefinition = "boolean default false")
 	@JsonIgnore
+	@Column(name="is_deleted",columnDefinition = "boolean default false")
 	private Boolean isDeleted= false;
 	
 }

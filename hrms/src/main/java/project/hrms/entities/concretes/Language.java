@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,7 +21,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="languages")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","candidate"})
+
 public class Language {
 
 	@Id
@@ -30,6 +32,8 @@ public class Language {
 	@Column(name="language")
 	private String language;
 	
+	@Min(value=1)
+	@Max(value=5)
 	@Column(name="level")
 	private int level;
 	
@@ -43,7 +47,7 @@ public class Language {
 	private Boolean isDeleted=false;
 	
 	// relational properties
-	
+
 	@ManyToOne()
 	@JoinColumn(name="candidate_id")
 	private Candidate candidate;

@@ -69,6 +69,7 @@ public class JobAdvertisement {
 	
 	// relational properties
 	
+	
 	@ManyToOne()
 	@JoinColumn(name="employer_id")
 	private Employer employer;

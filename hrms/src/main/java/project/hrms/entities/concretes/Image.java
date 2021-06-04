@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Table(name="images")
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","candidate"})
+
 public class Image {
 	
 	@Id
@@ -51,6 +52,7 @@ public class Image {
 	
 	// relational properties
 	
-	 @OneToOne(optional=false,fetch=FetchType.LAZY)  // şuna ihtiyac yok sanki.. Cerenimoya sor
+	 @OneToOne(optional=false,fetch=FetchType.LAZY) 
+	 @JoinColumn(name = "candidate_id")
 	 private Candidate candidate;
 }

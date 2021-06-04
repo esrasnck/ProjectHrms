@@ -26,8 +26,7 @@ import lombok.NoArgsConstructor;
 @Table(name="candidates")
 @EqualsAndHashCode(callSuper=false) 
 @PrimaryKeyJoinColumn(name = "user_id",referencedColumnName = "id")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","coverLetters","jobExperiences",
-    "languages","links","schools","skills","image"})
+
 public class Candidate extends User {
 
 	@Column(name="first_name")
@@ -47,12 +46,6 @@ public class Candidate extends User {
 	
 	@Column(name="picture_url")
 	private String pictureUrl;
-//	
-//	@Column(name ="github_address")
-//	private String githubAddress;
-//	
-//	@Column(name="linkedin_address")
-//	private String linkedinAddress;
 	
 	
 	@Column(name="created_date")
@@ -66,25 +59,30 @@ public class Candidate extends User {
 	
    // relational Properties
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy ="candidate")
 	private List<CoverLetter> coverLetters;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="candidate")
 	private List<JobExperience> jobExperiences;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="candidate")
 	private List<Language> languages;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="candidate")
 	private List<Link> links;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="candidate")
 	private List<School> schools;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="candidate")
 	private List<Skill> skills;
 	
-	@OneToOne(mappedBy="candidate",optional=false, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy="candidate",optional=false, fetch=FetchType.LAZY)
 	private Image image;
 }
