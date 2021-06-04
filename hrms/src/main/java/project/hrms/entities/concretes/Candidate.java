@@ -83,6 +83,7 @@ public class Candidate extends User {
 	@OneToMany(mappedBy="candidate")
 	private List<Skill> skills;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="candidate",optional=false, fetch=FetchType.LAZY)
 	private Image image;
 }
