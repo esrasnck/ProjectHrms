@@ -65,5 +65,19 @@ public class JobTitleManager implements JobTitleService {
 	}
 
 
+	@Override
+	public Result update(JobTitle jobTitle) {
+		this.jobtitleDao.save(jobTitle);
+		return new SuccessResult("JobTitle updated !");
+	}
+
+
+	@Override
+	public Result delete(JobTitle jobTitle) {
+		this.jobtitleDao.delete(jobTitle);
+		return new SuccessResult("JobTitle deleted !");
+	}
+
+
 	
 }

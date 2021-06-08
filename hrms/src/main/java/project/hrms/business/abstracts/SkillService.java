@@ -10,5 +10,9 @@ public interface SkillService {
 
 	Result add(Skill skill);
 	
+	Result update(Skill skill);
+	
+	Result delete(Skill skill);
+	
 	DataResult<List<Skill>> getAllByCandidateId(int candidateId);
 }

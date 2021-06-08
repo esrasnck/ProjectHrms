@@ -6,8 +6,12 @@ import java.util.*;
 import project.hrms.entities.concretes.Language;
 
 public interface LanguageService {
-
-	Result add(Language language);
 	
 	DataResult<List<Language>> getAllByCandidateId(int candidateId);
+	
+	Result add(Language language);
+	
+	Result update(Language language);
+	
+	Result delete(Language language);
 }

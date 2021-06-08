@@ -9,6 +9,7 @@ import project.hrms.business.abstracts.SkillService;
 import project.hrms.core.utilities.results.DataResult;
 import project.hrms.core.utilities.results.Result;
 import project.hrms.core.utilities.results.SuccessDataResult;
+import project.hrms.core.utilities.results.SuccessResult;
 import project.hrms.dataAccess.abstracts.SkillDao;
 import project.hrms.entities.concretes.Skill;
 
@@ -27,13 +28,25 @@ public class SkillManager implements SkillService {
 	@Override
 	public Result add(Skill skill) {
 		this.skillDao.save(skill);
-		return null;
+		return new SuccessResult("Skill added !");
 	}
 
 	@Override
 	public DataResult<List<Skill>> getAllByCandidateId(int candidateId) {
-		// TODO Auto-generated method stub
+		
 		return new SuccessDataResult<List<Skill>>(this.skillDao.findAllByCandidate_Id(candidateId));
+	}
+
+	@Override
+	public Result update(Skill skill) {
+		this.skillDao.save(skill);
+		return new SuccessResult("Skill updated !");
+	}
+
+	@Override
+	public Result delete(Skill skill) {
+		this.skillDao.delete(skill);
+		return new SuccessResult("Skill deleted !");
 	}
 	
 	

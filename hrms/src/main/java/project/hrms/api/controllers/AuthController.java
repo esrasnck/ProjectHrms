@@ -1,5 +1,6 @@
 package project.hrms.api.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,7 @@ import project.hrms.entities.concretes.Candidate;
 import project.hrms.entities.concretes.Employer;
 
 @RestController
-
+@CrossOrigin
 @RequestMapping("api/auth")
 public class AuthController {
 

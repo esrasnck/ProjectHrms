@@ -36,6 +36,18 @@ public class LinkManager implements LinkService {
 		
 		return new SuccessDataResult<List<Link>>(this.linkDao.findAllByCandidate_Id(candidateId));
 	}
+
+	@Override
+	public Result update(Link link) {
+		this.linkDao.save(link);
+		return new SuccessResult("Link updated !");
+	}
+
+	@Override
+	public Result delete(Link link) {
+		this.linkDao.delete(link);
+		return new SuccessResult("Link deleted !");
+	}
 	
 	
 }

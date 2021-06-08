@@ -47,4 +47,18 @@ public class SchoolManager implements SchoolService {
 		return new SuccessDataResult<List<School>>(this.schoolDao.findAllByCandidate_Id(candidateId));
 	}
 
+
+	@Override
+	public Result update(School school) {
+	     this.schoolDao.save(school);
+		return new SuccessResult("School updated !");
+	}
+
+
+	@Override
+	public Result delete(School school) {
+		this.schoolDao.delete(school);
+		return new SuccessResult("School deleted !");
+	}
+
 }

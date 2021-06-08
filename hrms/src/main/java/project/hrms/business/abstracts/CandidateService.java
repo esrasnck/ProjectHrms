@@ -13,11 +13,15 @@ public interface CandidateService {
 	
 	DataResult<Candidate> getByEmail(String email);
 	
-	Result add(Candidate candidate);
-	
 	DataResult<List<Candidate>> getAll();
 	
 	DataResult<Candidate> getById(int candidateId);
 	
 	DataResult<CandidateCvDto> getDtoById(int candidateId);
+	
+	Result add(Candidate candidate);
+	
+	Result update(Candidate candidate);
+	
+	Result delete(Candidate candidate);
 }

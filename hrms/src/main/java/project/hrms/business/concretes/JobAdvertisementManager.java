@@ -43,8 +43,6 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	}
 	
 	
-	// teşekkürler yakup :)
-	
 	@Override
 	public DataResult<List<JobAdvertisement>> getByIsActive() {
 		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findByIsActive(),"All active advertisement listed !");
@@ -67,10 +65,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		 
 		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findByEmployer_IdAndIsOpenedTrue(employerId));
 	}
-	
-	
-
-	
+		
 	@Override
 	public Result update(JobAdvertisement jobAdvertisement) {
 		
@@ -78,9 +73,14 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		return new SuccessResult("Job Advertisement updated !");
 	}
 	
-	
+	@Override
+	public Result delete(JobAdvertisement jobAdvertisement) {
+ 
+		this.jobAdvertisementDao.delete(jobAdvertisement);
 
-	
+		return new SuccessResult("Job Advertisement deleted !");
+	}
+
 
 	@Override
 	public Result toggleActive(int jobId) {
@@ -119,6 +119,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		return jobAdvertisementDtos;
 	
 	}
+
 
 	
 }

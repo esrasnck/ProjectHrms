@@ -27,6 +27,12 @@ public class CoverLetterManager implements CoverLetterService {
 	}
 
 
+	@Override
+	public DataResult<List<CoverLetter>> getAllByCandidateId(int candidateId) {
+	
+		return new SuccessDataResult<List<CoverLetter>>(this.coverLetterDao.findAllByCandidate_Id(candidateId));
+	}
+
 
 	@Override
 	public Result add(CoverLetter coverLetter) {
@@ -35,11 +41,20 @@ public class CoverLetterManager implements CoverLetterService {
 	}
 
 
+	@Override
+	public Result update(CoverLetter coverLetter) {
+
+		this.coverLetterDao.save(coverLetter);
+		return new SuccessResult("Cover letter updated !");
+	}
+
 
 	@Override
-	public DataResult<List<CoverLetter>> getAllByCandidateId(int candidateId) {
-	
-		return new SuccessDataResult<List<CoverLetter>>(this.coverLetterDao.findAllByCandidate_Id(candidateId));
+	public Result delete(CoverLetter coverLetter) {
+
+        this.coverLetterDao.delete(coverLetter);
+        return new SuccessResult("Cover letter deleted !");
 	}
+
 
 }

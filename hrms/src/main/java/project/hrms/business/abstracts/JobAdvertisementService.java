@@ -8,19 +8,19 @@ import project.hrms.entities.dtos.JobAdvertisementDto;
 
 public interface JobAdvertisementService {
 
-	Result add(JobAdvertisement jobAdvertisement);
-	
 	DataResult<List<JobAdvertisement>> getByIsActive();
 
 	DataResult<List<JobAdvertisement>> getAllSortedByReleaseDate();
 
 	DataResult<List<JobAdvertisement>> getAllByEmployerId(int employerId);
-
-	Result update(JobAdvertisement jobAdvertisement);
 	
 	Result toggleActive(int jobId);
 	
+	Result add(JobAdvertisement jobAdvertisement);
 	
+	Result update(JobAdvertisement jobAdvertisement);
+	
+	Result delete(JobAdvertisement jobAdvertisement);
 }
 
 

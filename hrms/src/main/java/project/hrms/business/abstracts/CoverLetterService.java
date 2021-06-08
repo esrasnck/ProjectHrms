@@ -8,7 +8,11 @@ import project.hrms.entities.concretes.CoverLetter;
 
 public interface CoverLetterService {
 
+	DataResult<List<CoverLetter>> getAllByCandidateId(int candidateId);
+	
 	Result add(CoverLetter coverLetter);
 	
-	DataResult<List<CoverLetter>> getAllByCandidateId(int candidateId);
+	Result update(CoverLetter coverLetter);
+	
+	Result delete(CoverLetter coverLetter);
 }

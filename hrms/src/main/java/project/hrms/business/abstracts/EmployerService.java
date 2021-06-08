@@ -10,7 +10,11 @@ public interface EmployerService {
 
 	DataResult<List<Employer>> getAll();
 	
+	DataResult<Employer> getByEmail(String email);
+	
 	Result add(Employer employer);
 	
-	DataResult<Employer> getByEmail(String email);
+	Result update(Employer employer);
+	
+	Result delete(Employer employer);
 }

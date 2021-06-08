@@ -11,43 +11,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.hrms.business.abstracts.EmployeeService;
 import project.hrms.business.abstracts.EmployerService;
 import project.hrms.core.utilities.results.DataResult;
 import project.hrms.core.utilities.results.Result;
+import project.hrms.entities.concretes.Employee;
 import project.hrms.entities.concretes.Employer;
 
 @RestController
-@RequestMapping("api/employers")
+@RequestMapping("api/employees")
 @CrossOrigin
-public class EmployerController {
+public class EmployeeController {
 
-	private EmployerService employerService;
+
+	private EmployeeService employeeService;
 
 	@Autowired
-	public EmployerController(EmployerService employerService) {
+	public EmployeeController(EmployeeService employeService) {
 		super();
-		this.employerService = employerService;
+		this.employeeService = employeService;
 	}
+	
+	// TODO Teste girecek
 	
 	@GetMapping("/getall")
-	public DataResult<List<Employer>> getAll(){
-		return this.employerService.getAll();
+	public DataResult<List<Employee>> getAll() {
+		
+		
+		return this.employeeService.getAll();
+		
+	}
+
+	@GetMapping("getbyid")
+	public DataResult<Employee> getById(@RequestParam("id") int employeeId){
+		return this.employeeService.getById(employeeId);
 	}
 	
-	//TODO test edilecek
-	
 	@PostMapping("/add")
-	public Result add(@RequestBody Employer employer){
-		return this.employerService.add(employer);
+	public Result add(@RequestBody Employee employee){
+		return this.employeeService.add(employee);
 	}
 
 	@PostMapping("/update")
-	public Result update(@RequestBody Employer employer){
-		return this.employerService.update(employer);
+ 	public Result update(@RequestBody Employee employee){
+		return this.employeeService.update(employee);
 	}
 	
 	@PostMapping("/delete")
-	public Result delete(@RequestBody Employer employer){
-		return this.employerService.delete(employer);
+    public Result delete(@RequestBody Employee employee){
+		return this.employeeService.delete(employee);
 	}
+	
 }
+
+

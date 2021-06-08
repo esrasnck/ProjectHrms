@@ -40,4 +40,18 @@ public class LanguageManager implements LanguageService{
 		return new SuccessDataResult<List<Language>>(this.languageDao.findAllByCandidate_Id(candidateId));
 	}
 
+
+	@Override
+	public Result update(Language language) {
+		this.languageDao.save(language);
+		return new SuccessResult("Language updated !");
+	}
+
+
+	@Override
+	public Result delete(Language language) {
+		this.languageDao.delete(language);
+		return new SuccessResult("Language deleted !");
+	}
+
 }

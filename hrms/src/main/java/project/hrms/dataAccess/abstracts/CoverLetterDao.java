@@ -8,4 +8,6 @@ import project.hrms.entities.concretes.CoverLetter;
 public interface CoverLetterDao extends JpaRepository<CoverLetter, Integer> {
 
 	List<CoverLetter> findAllByCandidate_Id(int candidateId);
+	
+	CoverLetter findById(int id);
 }

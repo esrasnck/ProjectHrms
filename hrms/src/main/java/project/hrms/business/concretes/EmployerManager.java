@@ -60,6 +60,20 @@ public class EmployerManager implements EmployerService {
 			return new SuccessResult("Employer added !");
 		}
 		
+		@Override
+		public Result update(Employer employer) {
+	        
+			this.employerDao.save(employer);
+			return new SuccessResult("Employer updated !");
+		}
+
+		@Override
+		public Result delete(Employer employer) {
+			this.employerDao.delete(employer);
+			return new SuccessResult("Employer deleted !");
+		}
+		
+		
 		private boolean checkIfEmailExists(String email) {
 			if(this.employerDao.findByEmail(email) !=null) {
 				return false;
@@ -89,5 +103,7 @@ public class EmployerManager implements EmployerService {
 
 			return false;
 		}
+
+
 	
 }

@@ -105,6 +105,26 @@ public class CandidateManager implements CandidateService {
 	}
 	
 	@Override
+	public Result update(Candidate candidate) {
+	
+	    this.candidateDao.save(candidate);
+	
+		return new SuccessResult("Candidate updated !");
+	}
+
+
+
+
+	@Override
+	public Result delete(Candidate candidate) {
+
+        this.candidateDao.delete(candidate);
+		return new SuccessResult("Candidate deleted");
+	}
+
+	
+	
+	@Override
 	public DataResult<CandidateCvDto>getDtoById(int candidateId) {
 		
 		CandidateCvDto cvDto = new CandidateCvDto(); // hic icime sinmiyon ama :(
@@ -162,6 +182,10 @@ public class CandidateManager implements CandidateService {
 		}
 		return true;
 	}
+
+
+
+
 
 
 

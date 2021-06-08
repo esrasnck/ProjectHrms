@@ -1,5 +1,6 @@
 package project.hrms.business.concretes;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,38 @@ public class ImageManager implements ImageService {
 	public DataResult<Image> getByCandidateId(int candidateId) {
 
 		return new SuccessDataResult<Image>(this.imageDao.findByCandidate_Id(candidateId));
+	}
+
+
+
+	@Override
+	public DataResult<List<Image>> getAll() {
+		
+		return new SuccessDataResult<List<Image>>(this.imageDao.findAll());
+	}
+
+
+
+	@Override
+	public DataResult<Image> getById(int id) {
+		
+		return new SuccessDataResult<Image>(this.imageDao.findById(id));
+	}
+
+
+
+	@Override
+	public Result update(Image image) {
+		this.imageDao.save(image);
+		return new SuccessResult("Image updated !");
+	}
+
+
+
+	@Override
+	public Result delete(Image image) {
+		this.imageDao.delete(image);
+		return new SuccessResult("Image deleted !");
 	}
 
 }

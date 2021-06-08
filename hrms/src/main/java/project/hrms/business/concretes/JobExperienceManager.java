@@ -49,4 +49,37 @@ public class JobExperienceManager implements JobExperienceService {
 		return new SuccessDataResult<List<JobExperience>>(this.jobExperineceDao.findAllByCandidate_Id(candidateId));
 	}
 
+  
+	
+
+	@Override
+	public DataResult<List<JobExperience>> getAll() {
+	
+		return new SuccessDataResult<List<JobExperience>>(this.jobExperineceDao.findAll());
+	}
+
+
+
+	@Override
+	public DataResult<JobExperience> getById(int id) {
+	
+		return new SuccessDataResult<JobExperience>(this.jobExperineceDao.findById(id).orElseGet(null));
+	}
+
+
+
+	@Override
+	public Result update(JobExperience jobExperinence) {
+		this.jobExperineceDao.save(jobExperinence);
+		return new SuccessResult("Job Experience updated !");
+	}
+
+
+
+	@Override
+	public Result delete(JobExperience jobExperinence) {
+	this.jobExperineceDao.delete(jobExperinence);
+		return  new SuccessResult("Job Experience deleted !");
+	}
+
 }

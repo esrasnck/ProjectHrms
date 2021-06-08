@@ -3,6 +3,7 @@ package project.hrms.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import project.hrms.entities.dtos.JobAdvertisementDto;
 @RestController
 
 @RequestMapping("api/jobadvertisements")
+@CrossOrigin
 public class JobAdvertisementController {
 
 	private JobAdvertisementService jobAdvertisementService;
@@ -71,5 +73,10 @@ public class JobAdvertisementController {
 		return this.jobAdvertisementService.update(jobAdvertisement);
 	}
 
+	//TODO test et
+	@PostMapping("/delete")
+	public Result delete(@RequestBody JobAdvertisement jobAdvertisement) {
+		return this.jobAdvertisementService.delete(jobAdvertisement);
+	}
 
 }

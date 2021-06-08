@@ -10,7 +10,11 @@ public interface JobTitleService {
 
 	DataResult<List<JobTitle>> getAll();
 	
+	DataResult<JobTitle> getJobTitleById(int jobTitleId);
+	
 	Result add(JobTitle jobTitle);
 	
-	DataResult<JobTitle> getJobTitleById(int jobTitleId);
+	Result update(JobTitle jobTitle);
+	
+	Result delete(JobTitle jobTitle);
 }
