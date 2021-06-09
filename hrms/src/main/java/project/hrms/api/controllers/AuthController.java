@@ -11,6 +11,8 @@ import project.hrms.business.abstracts.AuthService;
 import project.hrms.core.utilities.results.Result;
 import project.hrms.entities.concretes.Candidate;
 import project.hrms.entities.concretes.Employer;
+import project.hrms.entities.dtos.RegisterForCandidateDto;
+import project.hrms.entities.dtos.RegisterForEmployerDto;
 
 @RestController
 @CrossOrigin
@@ -25,20 +27,20 @@ public class AuthController {
 	}
 	
 	@PostMapping("/registerCandidate")
-	public Result registerCandidate(@RequestBody Candidate candidate,String confirmPassword) {
+	public Result registerCandidate(@RequestBody RegisterForCandidateDto registerForCandidateDto) {
 		
-		return this.authService.registerCandidate(candidate, confirmPassword);
+		return this.authService.registerCandidate(registerForCandidateDto);
 		
 	}
 	
 	@PostMapping("/registerEmployer")
-	public Result registerCandidate(@RequestBody Employer employer,String confirmPassword) {
+	public Result registerCandidate(@RequestBody RegisterForEmployerDto registerForEmployerDto) {
 		
-		return this.authService.registerEmployer(employer, confirmPassword);
+		return this.authService.registerEmployer(registerForEmployerDto);
 		
 	}
 	
-	@GetMapping("/verify")
+	@GetMapping("/verify")   // hatalı :(
 	public Result verify(int userId, String verificationCode) {
 		
 		return this.authService.verifyEmail(userId, verificationCode);

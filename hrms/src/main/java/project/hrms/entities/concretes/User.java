@@ -45,7 +45,7 @@ public class User {
 	@Column(name="password")
 	@NotBlank
 	@NotNull
-	@JsonIgnore
+    @JsonIgnore
 	private String password;
 	
 	@Column(name="is_active",columnDefinition = "boolean default true") 

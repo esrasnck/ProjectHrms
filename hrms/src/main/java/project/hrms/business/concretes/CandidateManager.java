@@ -65,7 +65,7 @@ public class CandidateManager implements CandidateService {
 	@Override
 	public DataResult<Candidate> getByNationalId(String nationalId) {
 		
-		return new SuccessDataResult<Candidate>(this.candidateDao.findByNationalityId(nationalId));
+		return new SuccessDataResult<Candidate>(this.candidateDao.findByIdentificationNumber(nationalId));
 	}
 
 	@Override
@@ -86,17 +86,13 @@ public class CandidateManager implements CandidateService {
 	@Override
 	public Result add(Candidate candidate) {
 		
-		if(!validationForCandidate(candidate)) {
-			return new ErrorResult("Missing information...");
-		}
-		
 		if(!checkIfRealPerson(candidate)) {
 			return new ErrorResult("Invalid person...");
 		}
-		if(!checkIfEmailExists(candidate.getEmail())) {
+		if(!checkIfEmailExists(candidate.getEmail())) {    
 			return new ErrorResult("Email already exist...");
 		}
-		if(!checkIfNationalityId(candidate.getNationalityId())) {
+		if(!checkIfNationalityId(candidate.getIdentificationNumber())) {
 			return new ErrorResult("Nationality already exist...");
 		}
 		
@@ -156,14 +152,14 @@ public class CandidateManager implements CandidateService {
 	}
 	
 	private boolean checkIfNationalityId(String nationalityId) {
-		if(this.candidateDao.findByNationalityId(nationalityId)!=null) {
+		if(this.candidateDao.findByIdentificationNumber(nationalityId)!=null) {
 			return false;
 		}
 		return true;
 	}
 	
 	private boolean checkIfRealPerson(Candidate candidate) {
-		   if(!this.userCheckService.checkIfRealPerson(Long.parseLong(candidate.getNationalityId()), candidate.getFirstName().toUpperCase(new Locale("tr")), candidate.getLastName().toLowerCase(new Locale("tr")),
+		   if(!this.userCheckService.checkIfRealPerson(Long.parseLong(candidate.getIdentificationNumber()), candidate.getFirstName().toUpperCase(new Locale("tr")), candidate.getLastName().toLowerCase(new Locale("tr")),
 				   candidate.getDateOfBirth())) {
 			   
 			   return false;
@@ -173,15 +169,6 @@ public class CandidateManager implements CandidateService {
 		}
 		
 
-	private boolean validationForCandidate(Candidate candidate) {
-		
-		if(candidate.getFirstName() == null && candidate.getLastName() == null && candidate.getNationalityId() == null
-				&& candidate.getDateOfBirth() == null && candidate.getEmail() == null) {
-			return false;
-					
-		}
-		return true;
-	}
 
 
 

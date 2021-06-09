@@ -8,7 +8,7 @@ import project.hrms.entities.concretes.Candidate;
 
 public interface CandidateDao extends JpaRepository<Candidate,Integer> {
 
-	Candidate findByNationalityId(String nationalityId);
+	Candidate findByIdentificationNumber(String identificationNumber);
 	
 	//Optional<> Araştır
 	Candidate findByEmail(String email);

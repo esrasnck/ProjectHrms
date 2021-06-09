@@ -3,6 +3,7 @@ package project.hrms.business.concretes;
 import java.time.LocalDate;
 import java.util.Locale;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ import project.hrms.core.utilities.verification.VerificationService;
 import project.hrms.entities.concretes.Candidate;
 import project.hrms.entities.concretes.Employer;
 import project.hrms.entities.concretes.VerificationCode;
+import project.hrms.entities.dtos.RegisterForCandidateDto;
+import project.hrms.entities.dtos.RegisterForEmployerDto;
 
 @Service("AuthManager")
 public class AuthManager implements AuthService {
@@ -27,10 +30,14 @@ public class AuthManager implements AuthService {
 	private EmployerService employerService;
 	private VerificationCodeService codeService;
 	private VerificationService verificationService;
+	
+	private ModelMapper modelMapper;
 
 	@Autowired
-	public AuthManager(CandidateService candidateService, EmployerService employerService, VerificationCodeService codeService, VerificationService verificationService) {
+	public AuthManager(ModelMapper modelMapper,CandidateService candidateService, EmployerService employerService, VerificationCodeService codeService, VerificationService verificationService) {
 
+		this.modelMapper = modelMapper;
+		
 		this.candidateService = candidateService;
 
 		this.employerService = employerService;
@@ -42,55 +49,45 @@ public class AuthManager implements AuthService {
 	}
 
 	@Override
-	public Result registerEmployer(Employer employer, String confirmedPassword) {
+	public Result registerEmployer(RegisterForEmployerDto registerForEmployerDto) {
         
-       if(!checkIfEqualPasswordAndConfirmPassword(employer.getPassword(),confirmedPassword)) {
+       if(!checkIfEqualPasswordAndConfirmPassword(registerForEmployerDto.getPassword(),registerForEmployerDto.getConfirmPassword())) {
 			
 			return new ErrorResult("Passwords do not match !");
 		}
 		
+       Employer employer = modelMapper.map(registerForEmployerDto, Employer.class);
+       
 		var result = this.employerService.add(employer);
 		
+		System.out.println(result);
          if(result.isSuccess()) {
-        	 
-        	 
-         // TODO metot içine sok... 
-         // TODO Yarın buradan devam et... !
-        	 String code = this.verificationService.codeGenerator(); // verification code ürettim
- 			this.verificationService.sendVerificationCode(code);  // gönderdim
- 			
- 			VerificationCode umut = new VerificationCode(employer.getId(),code,LocalDate.now().plusDays(1));
- 			this.codeService.add(umut);  // veri tabanına ekledim.
-        	 
-		   return new SuccessResult("Employer Registered !");
-		   
+        	 this.generateVerificationCode(employer.getId());
+
            }
           return new ErrorResult("something's gone wrong... Please try again.");
 	
 	}
 
 	@Override
-	public Result registerCandidate(Candidate candidate, String confirmedPassword) {
+	public Result registerCandidate(RegisterForCandidateDto registerForCandidateDto) {
 
-		if(!checkIfEqualPasswordAndConfirmPassword(candidate.getPassword(),confirmedPassword)) {
+		
+		if(!checkIfEqualPasswordAndConfirmPassword(registerForCandidateDto.getPassword(),registerForCandidateDto.getConfirmedPassword())) {
 			
 			return new ErrorResult("Passwords do not match !");
 		}
+		
+		Candidate candidate = modelMapper.map(registerForCandidateDto, Candidate.class);
 		
 		var result = this.candidateService.add(candidate);
 		
 		if(result.isSuccess()) {
 			
-			String code = this.verificationService.codeGenerator(); // verification code ürettim
-			this.verificationService.sendVerificationCode(code);  // gönderdim
-			
-			VerificationCode umut = new VerificationCode(candidate.getId(),code,LocalDate.now().plusDays(1));
-			this.codeService.add(umut);  // veri tabanına ekledim.
-			
-			return new SuccessResult("Candidate Registered !");
+			this.generateVerificationCode(candidate.getId());
 		
 		}
-		return new ErrorResult("something's gone wrong... Please try again.");
+		return new ErrorResult(result.getMessage());
 		
 	}
 	
@@ -110,34 +107,104 @@ public class AuthManager implements AuthService {
 	public Result verifyEmail(int user_id, String activationCode) {
 		
 		var result = this.codeService.getByUserIdAndVerificationCode(user_id, activationCode);
-		
-	    if(result.getData() ==null) {
-	    	
-	    	return new ErrorResult("Verification Code is wrong !");
+
+		if(!this.isVerificationCodeExist(user_id, activationCode).isSuccess()
+				&& !this.isVerificationCodeActive(user_id, activationCode).isSuccess()
+				&& !isExpired(user_id,activationCode).isSuccess()) {
+			
+			return new ErrorResult();
+		}
+
+	    if(!this.setCandidateActivationCode(user_id).isSuccess() && !this.setEmployerActivationCode(user_id).isSuccess()) {
+	    	return new ErrorResult("User couldn't find");
 	    }
 	    
-	    if(result.getData().getIsActivate()) {
-	    	return new ErrorResult("Verification Code is already active");
-	    }
-	    
-	    if(result.getData().getExpiredDate().isBefore(LocalDate.now())){
 	 
-	    	return new ErrorResult("Verification Code is Expired");
-	    }
-	   
-	    // TODO: abla intihar etmeden önce  --- aha umut gör :P 
-	  
-	    
 	    VerificationCode verificationCode = result.getData();
 	    
 	    verificationCode.setConfirmedDate(LocalDate.now());
 	    verificationCode.setIsActivate(true);
 	    this.codeService.update(verificationCode);
-	   
+	   	    
 	    return new SuccessResult("Verified !");
 
 	}
 	
 	
+	// business rules
 	
+	private Result setEmployerActivationCode(int user_id) {
+		
+    if(this.employerService.getById(user_id).getData()!= null) {
+	    	
+	    	Employer employer = this.employerService.getById(user_id).getData();
+	    
+	    	employer.setIsEmailVerified(true);
+	    	
+	    	this.employerService.update(employer);
+	    	
+	    	return new SuccessResult();
+	    }
+        
+    return new ErrorResult();
+	}
+	
+	private Result setCandidateActivationCode(int user_id) {
+	    if(this.candidateService.getById(user_id).getData()!=null) {
+	    	
+	    	Candidate candidate =this.candidateService.getById(user_id).getData();
+	    	
+	    	candidate.setIsEmailVerified(true);
+	    	
+	    	this.candidateService.update(candidate);
+
+	    	return new SuccessResult();
+	    }
+	    
+	    return new ErrorResult();
+		}
+		
+	private Result isVerificationCodeExist(int user_id, String activationCode) {
+		
+		if(this.codeService.getByUserIdAndVerificationCode(user_id, activationCode).getData()==null) {
+			return new ErrorResult("Verification Code is wrong !");
+		}
+		return new SuccessResult();
+		
+	}
+	
+	private Result isVerificationCodeActive(int user_id, String activationCode) {
+		
+		if(this.codeService.getByUserIdAndVerificationCode(user_id, activationCode).getData().getIsActivate()) {
+
+		    return new ErrorResult("Verification Code is already active");
+		}
+		return new SuccessResult();
+	}
+
+	private Result isExpired(int user_id, String activationCode) {
+		
+		if(this.codeService.getByUserIdAndVerificationCode(user_id, activationCode).getData().getExpiredDate().isBefore(LocalDate.now())) {
+
+	    	return new ErrorResult("Verification Code is Expired");
+		}
+		return new SuccessResult();
+	}
+	
+	private Result generateVerificationCode(int userId)
+	{
+		String code = this.verificationService.codeGenerator();
+		this.verificationService.sendVerificationCode(code);
+		VerificationCode verificationCode = new VerificationCode(userId,code, LocalDate.now().plusDays(1));
+		this.codeService.add(verificationCode);
+		return new SuccessResult("Candidate Registered !");
+	}
+	
+//	String code = this.verificationService.codeGenerator(); // verification code ürettim
+	//	this.verificationService.sendVerificationCode(code); // gönderdim
+
+    //		VerificationCode umut = new VerificationCode(employer.getId(), code, LocalDate.now().plusDays(1));
+	//	this.codeService.add(umut); // veri tabanına ekledim.
+
+    // return new SuccessResult("Employer Registered !");
 }

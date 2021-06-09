@@ -47,9 +47,7 @@ public class EmployerManager implements EmployerService {
 			if(!this.checkIfEmailExists(employer.getEmail())) {
 				return new ErrorResult("Email already exist... ");
 			}
-			if(!this.validationForEmployer(employer)) {
-				return new ErrorResult("Missing information...");
-			}
+		
 			if(!this.checkIfEqualEmailAndDomain(employer.getEmail(),employer.getWebSite())) {
 				return new ErrorResult("Invalid mail adress...");
 		}
@@ -82,16 +80,7 @@ public class EmployerManager implements EmployerService {
 			
 		}
 		
-		private boolean validationForEmployer(Employer employer) {
-			
-			if(employer.getCompanyName() == null && employer.getWebSite()== null && employer.getEmail()== null
-					&& employer.getPhoneNumber() == null && employer.getPassword() == null) {
-				return false;
-						
-			}
-			return true;
-		}
-		
+	
 		private boolean checkIfEqualEmailAndDomain(String email, String website) {
 			String[] emailArr = email.split("@", 2);
 			String domain = website.substring(4, website.length());
@@ -102,6 +91,12 @@ public class EmployerManager implements EmployerService {
 			}
 
 			return false;
+		}
+
+		@Override
+		public DataResult<Employer> getById(int id) {
+			// TODO Auto-generated method stub
+			return new SuccessDataResult<Employer>(this.employerDao.findById(id).orElse(null));
 		}
 
 
