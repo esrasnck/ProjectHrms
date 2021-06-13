@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import project.hrms.business.abstracts.CityService;
 import project.hrms.core.utilities.results.DataResult;
+import project.hrms.core.utilities.results.ErrorResult;
 import project.hrms.core.utilities.results.Result;
 import project.hrms.core.utilities.results.SuccessDataResult;
 import project.hrms.core.utilities.results.SuccessResult;
@@ -39,6 +40,9 @@ public class CityManager implements CityService {
 	@Override
 	public Result add(City city) {
 
+		if(!this.isCityExists(city.getName()).isSuccess()) {
+			return new ErrorResult("City already exists");
+		}
 		this.cityDao.save(city);
 
 		return new SuccessResult("City added !");
@@ -61,7 +65,14 @@ public class CityManager implements CityService {
 	}
 	
 	
-	
+	public Result isCityExists(String name) {
+		
+		if(this.cityDao.findByName(name) != null) {
+			return new ErrorResult();
+			
+		}
+		return new SuccessResult();
+	}
 	
 	
 }

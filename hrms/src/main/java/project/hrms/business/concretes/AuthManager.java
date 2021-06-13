@@ -91,26 +91,16 @@ public class AuthManager implements AuthService {
 		
 	}
 	
-	// confirmed password
-	
-	private boolean checkIfEqualPasswordAndConfirmPassword(String password, String confirmPassword) {
 
-		
-		if (!password.equals(confirmPassword)) {
-			return false;
-		}
 
-		return true;
-	}
-
-	@Override
+	@Override   
 	public Result verifyEmail(int user_id, String activationCode) {
 		
-		var result = this.codeService.getByUserIdAndVerificationCode(user_id, activationCode);
+		var result = this.codeService.getByUserIdAndVerificationCode(user_id, activationCode);  
 
 		if(!this.isVerificationCodeExist(user_id, activationCode).isSuccess()
-				&& !this.isVerificationCodeActive(user_id, activationCode).isSuccess()
-				&& !isExpired(user_id,activationCode).isSuccess()) {
+				|| !this.isVerificationCodeActive(user_id, activationCode).isSuccess()
+				|| !isExpired(user_id,activationCode).isSuccess()) {
 			
 			return new ErrorResult();
 		}
@@ -132,6 +122,18 @@ public class AuthManager implements AuthService {
 	
 	
 	// business rules
+	
+	// confirmed password
+	
+	private boolean checkIfEqualPasswordAndConfirmPassword(String password, String confirmPassword) {
+
+		
+		if (!password.equals(confirmPassword)) {
+			return false;
+		}
+
+		return true;
+	}
 	
 	private Result setEmployerActivationCode(int user_id) {
 		
@@ -182,7 +184,7 @@ public class AuthManager implements AuthService {
 		return new SuccessResult();
 	}
 
-	private Result isExpired(int user_id, String activationCode) {
+	private Result isExpired(int user_id, String activationCode) { 
 		
 		if(this.codeService.getByUserIdAndVerificationCode(user_id, activationCode).getData().getExpiredDate().isBefore(LocalDate.now())) {
 
@@ -197,7 +199,7 @@ public class AuthManager implements AuthService {
 		this.verificationService.sendVerificationCode(code);
 		VerificationCode verificationCode = new VerificationCode(userId,code, LocalDate.now().plusDays(1));
 		this.codeService.add(verificationCode);
-		return new SuccessResult("Candidate Registered !");
+		return new SuccessResult("User Registered !");
 	}
 	
 //	String code = this.verificationService.codeGenerator(); // verification code ürettim

@@ -56,6 +56,12 @@ public class JobAdvertisement {
 	@JsonIgnore
 	private LocalDate createdDate=LocalDate.now();
 	
+	@Column(name="is_verified_by_employee",columnDefinition="boolean default false")
+	private Boolean isVerifiedByEmployee=false;
+	
+	@Column(name="is_remote",columnDefinition="boolean default false")
+	private Boolean isRemote=false;
+	
 	@Column(name="is_active",columnDefinition = "boolean default true")
 	@JsonIgnore
 	private Boolean isActive =true;
@@ -82,5 +88,12 @@ public class JobAdvertisement {
 	@ManyToOne()
 	@JoinColumn(name="job_title_id")
 	private JobTitle jobTitle;
+	
+	@ManyToOne()
+	@JoinColumn(name="employment_type_id")
+	private EmploymentType employmentType;
+	
+
+
 	
 }
