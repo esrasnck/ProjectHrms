@@ -16,11 +16,15 @@ public interface JobAdvertisementService {
 	
 	Result toggleActive(int jobId);
 	
+	Result toggleVerifiedByEmployee(int jobId);
+	
 	Result add(JobAdvertisement jobAdvertisement);
 	
 	Result update(JobAdvertisement jobAdvertisement);
 	
 	Result delete(JobAdvertisement jobAdvertisement);
+	
+	
 }
 
 

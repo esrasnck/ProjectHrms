@@ -31,6 +31,7 @@ public class City {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	@Column(name="id")
 	private int id;
 	

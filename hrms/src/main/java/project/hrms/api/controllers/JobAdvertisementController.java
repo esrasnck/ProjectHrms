@@ -32,6 +32,7 @@ public class JobAdvertisementController {
 	}
 	
 
+
 	
 	@PostMapping("/add")
 	public Result add(@RequestBody JobAdvertisement jobAdvertisement) {
@@ -62,6 +63,13 @@ public class JobAdvertisementController {
 	
 	}
 
+	@GetMapping("/employeeVerified")
+	public Result toggleVerifiedByEmployee(@RequestParam int jobAdvertisementId) {
+		
+		return this.jobAdvertisementService.toggleVerifiedByEmployee(jobAdvertisementId);
+	}
+	
+	
 	@GetMapping("/toggleactive")
 	public Result update(@RequestParam int jobAdvertisementId) {
 		return this.jobAdvertisementService.toggleActive(jobAdvertisementId);

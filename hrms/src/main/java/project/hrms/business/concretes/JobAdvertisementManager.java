@@ -86,7 +86,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	public Result toggleActive(int jobId) {
 		
 		JobAdvertisement jobAdvertisement = this.jobAdvertisementDao.findById(jobId);
-		if(!IsJobAdvertisementExists(jobAdvertisement)) {
+		if(!isJobAdvertisementExists(jobAdvertisement)) {
 			
 			return new ErrorResult("Job Advertisement doesn't exists");
 
@@ -97,9 +97,25 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		return new SuccessResult("Toggled") ;
 	}
 	
+	@Override
+	public Result toggleVerifiedByEmployee(int jobId) {
+		
+		JobAdvertisement jobAdvertisement = this.jobAdvertisementDao.findById(jobId);
+		if(!isJobAdvertisementExists(jobAdvertisement)) {
+			
+			return new ErrorResult("Job Advertisement doesn't exists");
+
+		}
+		
+		jobAdvertisement.setIsVerifiedByEmployee(true);
+		this.jobAdvertisementDao.save(jobAdvertisement);
+		return new SuccessResult("Verified by Employee");
+	}
+
+    
 	
 	
-	private boolean IsJobAdvertisementExists(JobAdvertisement jobAdvertisement) {
+	private boolean isJobAdvertisementExists(JobAdvertisement jobAdvertisement) {
 		
 		if(jobAdvertisement == null) {
 			return false;
@@ -119,6 +135,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		return jobAdvertisementDtos;
 	
 	}
+
 
 
 	
